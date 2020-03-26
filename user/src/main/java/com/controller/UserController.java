@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.service.OrderService;
 import com.service.PowerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class UserController {
     }
     @RequestMapping("/getPower")
     public Map<String,Object> getPower(){
+        System.out.println("我运行了");
         Map<String,Object> map = new HashMap<>();
         map.put("returnCode","200");
         map.put("returnMsg","返回成功");
@@ -44,6 +46,7 @@ public class UserController {
     }
     @RequestMapping("/feignGetPower")
     public Map<String,Object> feignGetPower(){
+        System.out.println("我运行了");
         Map<String,Object> map = new HashMap<>();
         map.put("returnCode","200");
         map.put("returnMsg","返回成功");
@@ -56,6 +59,14 @@ public class UserController {
         map.put("returnCode","200");
         map.put("returnMsg","返回成功");
         map.put("data",orderService.getOrder());
+        return map;
+    }
+
+    public Map<String,Object> fallbackMethod(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("returnCode","200");
+        map.put("returnMsg","返回成功");
+        map.put("data","我是友好信息");
         return map;
     }
 }
